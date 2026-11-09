@@ -25,30 +25,28 @@ def load_pdf_pymupdf(
     if not path.exists():
         raise FileNotFoundError(f"PDF not found: {path}")
 
-    doc = pymupdf.open(str(path))
-    meta = doc.metadata or {}
-    total_pages = doc.page_count
-
     result = []
-    for page_num in range(total_pages):
-        if pages is not None and page_num not in pages:
-            continue
-        page = doc[page_num]
-        text = page.get_text("text") or ""
-        if repair:
-            text = detect_and_repair(text)
-        result.append(
-            {
-                "page": page_num,
-                "text": text,
-                "metadata": {
-                    "source": str(path),
+    with pymupdf.open(str(path)) as doc:
+        meta = doc.metadata or {}
+        total_pages = doc.page_count
+        for page_num in range(total_pages):
+            if pages is not None and page_num not in pages:
+                continue
+            page = doc[page_num]
+            text = page.get_text("text") or ""
+            if repair:
+                text = detect_and_repair(text)
+            result.append(
+                {
                     "page": page_num,
-                    "total_pages": total_pages,
-                    "title": meta.get("title", ""),
-                    "author": meta.get("author", ""),
-                },
-            }
-        )
-    doc.close()
+                    "text": text,
+                    "metadata": {
+                        "source": str(path),
+                        "page": page_num,
+                        "total_pages": total_pages,
+                        "title": meta.get("title", ""),
+                        "author": meta.get("author", ""),
+                    },
+                }
+            )
     return result
