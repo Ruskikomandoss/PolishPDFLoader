@@ -6,6 +6,7 @@ build-backend = "hatchling.build"
 name = "polish-pdf-loader"
 version = "0.1.0"
 description = "LangChain-compatible PDF loaders with correct Polish character encoding"
+readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
     "langchain-core>=0.2",
