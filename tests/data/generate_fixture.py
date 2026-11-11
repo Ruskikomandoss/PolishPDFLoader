@@ -8,7 +8,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-
 PAN_TADEUSZ = (
     "Litwo! Ojczyzno moja! ty jesteś jak zdrowie.\n"
     "Ile cię trzeba cenić, ten tylko się dowie,\n"

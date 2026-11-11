@@ -1,5 +1,5 @@
+import warnings
 from pathlib import Path
-import pytest
 
 FIXTURE_PDF = Path(__file__).parent / "data" / "sample_polish.pdf"
 
@@ -10,5 +10,6 @@ def pytest_configure(config):
         try:
             from tests.data.generate_fixture import generate
             generate()
-        except Exception:
-            pass  # fixture-dependent tests will skip cleanly
+        except (ImportError, OSError) as exc:
+            # fixture-dependent tests will skip cleanly
+            warnings.warn(f"Could not generate test fixture PDF: {exc}", stacklevel=1)

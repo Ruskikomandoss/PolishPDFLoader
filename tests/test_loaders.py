@@ -1,9 +1,11 @@
-import pytest
 from pathlib import Path
 
+import pytest
+
 pytest.importorskip("pymupdf")
-from langchain_core.documents import Document  # noqa: E402
-from polish_pdf_loader import PolishPDFLoader, PolishPyMuPDFLoader  # noqa: E402
+from langchain_core.documents import Document
+
+from polish_pdf_loader import PolishPDFLoader, PolishPyMuPDFLoader
 
 FIXTURE = Path(__file__).parent / "data" / "sample_polish.pdf"
 

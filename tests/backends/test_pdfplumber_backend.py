@@ -1,8 +1,9 @@
-import pytest
 from pathlib import Path
 
+import pytest
+
 pytest.importorskip("pdfplumber")
-from polish_pdf_loader.backends.pdfplumber_backend import load_pdf_pdfplumber  # noqa: E402
+from polish_pdf_loader.backends.pdfplumber_backend import load_pdf_pdfplumber
 
 FIXTURE = Path(__file__).parent.parent / "data" / "sample_polish.pdf"
 

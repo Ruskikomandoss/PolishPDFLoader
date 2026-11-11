@@ -1,8 +1,9 @@
-import pytest
 from pathlib import Path
 
+import pytest
+
 pymupdf = pytest.importorskip("pymupdf")
-from polish_pdf_loader.backends.pymupdf_backend import load_pdf_pymupdf  # noqa: E402
+from polish_pdf_loader.backends.pymupdf_backend import load_pdf_pymupdf
 
 FIXTURE = Path(__file__).parent.parent / "data" / "sample_polish.pdf"
 

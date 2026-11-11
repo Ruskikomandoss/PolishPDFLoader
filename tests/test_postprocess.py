@@ -1,4 +1,4 @@
-from polish_pdf_loader.postprocess import postprocess, PostprocessConfig
+from polish_pdf_loader.postprocess import PostprocessConfig, postprocess
 
 
 def test_ligature_fi():

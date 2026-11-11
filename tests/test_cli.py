@@ -1,4 +1,5 @@
 from click.testing import CliRunner
+
 from polish_pdf_loader.cli import main
 
 

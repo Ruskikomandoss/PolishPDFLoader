@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator
 
 from langchain_core.document_loaders.base import BaseLoader
 from langchain_core.documents import Document

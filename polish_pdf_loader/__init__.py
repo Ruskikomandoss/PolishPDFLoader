@@ -1,16 +1,16 @@
 __version__ = "0.1.0"
 
-from polish_pdf_loader.loaders import (  # noqa: E402
+from polish_pdf_loader.loaders import (
     PolishPDFLoader,
-    PolishPyMuPDFLoader,
     PolishPdfPlumberLoader,
+    PolishPyMuPDFLoader,
     PolishPyPDFLoader,
 )
 
 __all__ = [
-    "__version__",
     "PolishPDFLoader",
-    "PolishPyMuPDFLoader",
     "PolishPdfPlumberLoader",
+    "PolishPyMuPDFLoader",
     "PolishPyPDFLoader",
+    "__version__",
 ]

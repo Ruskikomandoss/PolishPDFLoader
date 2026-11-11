@@ -1,4 +1,8 @@
-from polish_pdf_loader.encoding import repair_cp1250_as_latin1, detect_and_repair, is_polish_garbled
+from polish_pdf_loader.encoding import (
+    detect_and_repair,
+    is_polish_garbled,
+    repair_cp1250_as_latin1,
+)
 
 GARBLED = "Litwo! ty jesteœ jak zdrowie. Ile ciê trzeba ceniæ, kto ciê straci³."
 CORRECT = "Litwo! ty jesteś jak zdrowie. Ile cię trzeba cenić, kto cię stracił."

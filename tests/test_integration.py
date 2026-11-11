@@ -1,6 +1,8 @@
 """Integration tests — require tests/data/sample_polish.pdf (auto-generated)."""
-import pytest
 from pathlib import Path
+
+import pytest
+
 from polish_pdf_loader import PolishPDFLoader
 
 FIXTURE = Path(__file__).parent / "data" / "sample_polish.pdf"

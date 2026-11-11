@@ -1,8 +1,9 @@
-import pytest
 from pathlib import Path
 
+import pytest
+
 pytest.importorskip("pypdf")
-from polish_pdf_loader.backends.pypdf_backend import load_pdf_pypdf  # noqa: E402
+from polish_pdf_loader.backends.pypdf_backend import load_pdf_pypdf
 
 FIXTURE = Path(__file__).parent.parent / "data" / "sample_polish.pdf"
 
