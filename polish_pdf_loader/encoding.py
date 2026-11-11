@@ -9,6 +9,8 @@ The repair: re-encode the string to its original CP1252 bytes, then
 decode those bytes as CP1250.
 """
 
+import re
+
 # Unambiguous indicators of CP1250→CP1252 garbling.
 # _ANCHOR_MARKERS (œ Ÿ Œ) are essentially absent from normal prose and
 # MUST be present before any repair fires — this prevents false positives
@@ -19,7 +21,15 @@ decode those bytes as CP1250.
 _ANCHOR_MARKERS = frozenset("œŸŒ")  # œ Ÿ Œ
 _GARBLED_MARKERS = frozenset("œ³¹ŸŒ")  # œ ³ ¹ Ÿ Œ
 
-_CLEAN_POLISH = frozenset("ąćęłńóśźżĄĆĘŁŃÓŚŹŻ")
+# Letters that can only appear in correctly decoded text. Ó/ó are excluded:
+# they share a byte (0xD3/0xF3) in CP1250 and CP1252, so they survive the
+# garbling intact and say nothing about whether the text is clean.
+# ł ą ż garble to ³ ¹ ¿. Sitting *between two letters* ("g³os", "ka¿de")
+# they cannot be footnote superscripts or exponents, so they serve as an
+# anchor for pages that happen to contain no ś/ź/Ś (hence no œ Ÿ Œ).
+_IN_WORD_ANCHOR = re.compile(r"(?<=[^\W\d_])[³¹¿](?=[^\W\d_])")
+
+_CLEAN_POLISH = frozenset("ąćęłńśźżĄĆĘŁŃŚŹŻ")
 
 
 def repair_cp1250_as_latin1(text: str) -> str:
@@ -35,7 +45,7 @@ def is_polish_garbled(text: str) -> bool:
         return False
     # Require at least one unambiguous anchor marker to avoid false positives
     # on texts that happen to contain superscript digits (¹ ³) only.
-    if not any(c in _ANCHOR_MARKERS for c in text):
+    if not any(c in _ANCHOR_MARKERS for c in text) and not _IN_WORD_ANCHOR.search(text):
         return False
     marker_count = sum(1 for c in text if c in _GARBLED_MARKERS)
     return marker_count >= 2 and (marker_count / len(text)) > 0.002

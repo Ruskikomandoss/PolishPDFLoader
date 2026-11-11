@@ -39,3 +39,27 @@ def test_type3_unusual_chars_not_garbled():
     greek = "The variable Ω represents the sample space in probability theory."
     assert is_polish_garbled(greek) is False
     assert detect_and_repair(greek) == greek
+
+
+def test_garbled_text_containing_o_acute_is_repaired():
+    # 'ó' is byte 0xF3 in both CP1250 and CP1252, so it survives the
+    # mis-decoding intact and must not count as "already clean" evidence.
+    garbled = "Kto ciê straci³. Dziœ piêknoœæ tw¹ w ca³ej ozdobie, gród zamkowy"
+    assert is_polish_garbled(garbled) is True
+    assert detect_and_repair(garbled) == (
+        "Kto cię stracił. Dziś piękność twą w całej ozdobie, gród zamkowy"
+    )
+
+
+def test_garbled_page_without_s_acute_is_repaired():
+    # A page can be garbled yet contain no ś/Ś/ź (no œ Œ Ÿ anchors).
+    # ³ ¹ ¿ embedded inside a word are unambiguous garbling evidence.
+    garbled = "Zabra³ g³os, wymawiaj¹c z wolna ka¿de s³owo, a g³upi wy!"
+    assert detect_and_repair(garbled) == (
+        "Zabrał głos, wymawiając z wolna każde słowo, a głupi wy!"
+    )
+
+
+def test_superscript_after_word_still_not_garbled():
+    text = "Area is 5 m³ per unit and see note¹, also footnote³ here; x² too."
+    assert is_polish_garbled(text) is False
